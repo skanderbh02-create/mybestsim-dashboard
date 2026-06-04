@@ -1,0 +1,212 @@
+<!doctype html>
+<html lang="fr">
+<head>
+<meta charset="utf-8">
+<title>MyBestSim — eSIM Dashboard</title>
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.0/dist/chart.umd.min.js"></script>
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;700&family=Syne:wght@700;800&display=swap');
+  :root {
+    --bg:#0f1117; --surface:#1a1d27; --surface2:#22263a;
+    --border:#2e3148; --accent:#6366f1; --accent2:#34d399;
+    --text:#f1f5f9; --muted:#8b91a8; --radius:14px;
+    --shadow:0 4px 24px rgba(0,0,0,.4);
+  }
+  *{box-sizing:border-box;margin:0;padding:0}
+  body{font-family:'DM Sans',sans-serif;background:var(--bg);color:var(--text);font-size:15px;line-height:1.6}
+  .top-bar{background:var(--surface);border-bottom:1px solid var(--border);padding:14px 32px;display:flex;align-items:center;gap:12px}
+  .logo{font-family:'Syne',sans-serif;font-weight:800;font-size:1.1rem;color:var(--accent)}
+  .logo span{color:var(--text)}
+  .badge{background:var(--accent);color:#fff;font-size:11px;font-weight:700;padding:2px 8px;border-radius:99px;margin-left:auto}
+  .container{max-width:1200px;margin:0 auto;padding:32px 24px}
+  h1{font-family:'Syne',sans-serif;font-size:1.8rem;font-weight:800;margin-bottom:4px}
+  .subtitle{color:var(--muted);margin-bottom:32px;font-size:14px}
+
+  /* KPI GRID */
+  .kpi-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(170px,1fr));gap:14px;margin-bottom:36px}
+  .kpi{background:var(--surface);border:1px solid var(--border);border-radius:var(--radius);padding:20px;position:relative;overflow:hidden}
+  .kpi::before{content:'';position:absolute;top:0;left:0;right:0;height:3px;background:var(--accent)}
+  .kpi.green::before{background:var(--accent2)}
+  .kpi-label{font-size:11px;text-transform:uppercase;letter-spacing:.08em;color:var(--muted);font-weight:700;margin-bottom:8px}
+  .kpi-value{font-family:'Syne',sans-serif;font-size:1.9rem;font-weight:800;color:var(--text)}
+  .kpi-sub{font-size:12px;color:var(--muted);margin-top:4px}
+
+  /* CHARTS GRID */
+  .charts-grid{display:grid;grid-template-columns:1fr 1fr;gap:18px;margin-bottom:36px}
+  .chart-card{background:var(--surface);border:1px solid var(--border);border-radius:var(--radius);padding:22px}
+  .chart-card.wide{grid-column:1/-1}
+  .chart-title{font-family:'Syne',sans-serif;font-weight:700;font-size:.95rem;margin-bottom:18px;color:var(--text)}
+  canvas{max-height:260px}
+
+  /* TABLES */
+  .section{margin-bottom:32px}
+  .section h2{font-family:'Syne',sans-serif;font-size:1.1rem;font-weight:800;margin-bottom:14px;color:var(--text)}
+  table{width:100%;border-collapse:collapse;background:var(--surface);border-radius:var(--radius);overflow:hidden;border:1px solid var(--border)}
+  th,td{padding:12px 16px;border-bottom:1px solid var(--border);text-align:left;font-size:13.5px}
+  th{background:var(--surface2);color:var(--muted);font-size:11px;text-transform:uppercase;letter-spacing:.07em;font-weight:700}
+  tr:last-child td{border-bottom:none}
+  tr:hover td{background:var(--surface2)}
+
+  .note{color:var(--muted);font-size:12px;margin-top:32px;border-top:1px solid var(--border);padding-top:16px}
+  @media(max-width:680px){.charts-grid{grid-template-columns:1fr}.chart-card.wide{grid-column:auto}}
+</style>
+</head>
+<body>
+
+<div class="top-bar">
+  <div class="logo">MyBest<span>Sim</span></div>
+  <span style="color:var(--muted);font-size:13px">eSIM Analytics Dashboard</span>
+  <span class="badge">LIVE · 04 June 2026</span>
+</div>
+
+<main class="container">
+  <h1>Analyse catalogue eSIM</h1>
+  <p class="subtitle">18 fournisseurs analysés · Pipeline ETL automatisé · Mis à jour le 04 June 2026</p>
+
+  <!-- KPIs -->
+  <div class="kpi-grid">
+    <div class="kpi">
+      <div class="kpi-label">Total produits</div>
+      <div class="kpi-value">5056</div>
+      <div class="kpi-sub">cartes eSIM référencées</div>
+    </div>
+    <div class="kpi green">
+      <div class="kpi-label">Prix le plus bas</div>
+      <div class="kpi-value">5.36 €</div>
+      <div class="kpi-sub">entrée de gamme catalogue</div>
+    </div>
+    <div class="kpi">
+      <div class="kpi-label">Prix le plus haut</div>
+      <div class="kpi-value">154.63 €</div>
+      <div class="kpi-sub">haut de gamme catalogue</div>
+    </div>
+    <div class="kpi">
+      <div class="kpi-label">Prix moyen global</div>
+      <div class="kpi-value">29.30 €</div>
+      <div class="kpi-sub">tous fournisseurs confondus</div>
+    </div>
+    <div class="kpi">
+      <div class="kpi-label">Data moyenne</div>
+      <div class="kpi-value">14.5 Go</div>
+      <div class="kpi-sub">hors offres illimitées</div>
+    </div>
+    <div class="kpi">
+      <div class="kpi-label">Produits > 100 €</div>
+      <div class="kpi-value">56</div>
+      <div class="kpi-sub">offres premium</div>
+    </div>
+    <div class="kpi green">
+      <div class="kpi-label">Offres illimitées</div>
+      <div class="kpi-value">653</div>
+      <div class="kpi-sub">12.9% du catalogue</div>
+    </div>
+  </div>
+
+  <!-- GRAPHIQUES -->
+  <div class="charts-grid">
+
+    <div class="chart-card">
+      <div class="chart-title">📦 Produits par fournisseur</div>
+      <canvas id="chartProviders"></canvas>
+    </div>
+
+    <div class="chart-card">
+      <div class="chart-title">💶 Répartition par tranche de prix</div>
+      <canvas id="chartBuckets"></canvas>
+    </div>
+
+    <div class="chart-card wide">
+      <div class="chart-title">📊 Prix moyen par fournisseur (Top 8 les moins chers)</div>
+      <canvas id="chartAvgPrice"></canvas>
+    </div>
+
+  </div>
+
+  <!-- TABLES -->
+  <div class="section">
+    <h2>🏆 Meilleur rapport €/Go — Top 10</h2>
+    <table><thead><tr><th>Produit</th><th>Fournisseur</th><th>Data</th><th>Prix</th><th>€/Go</th></tr></thead><tbody><tr><td>eSIM Philippines 50 Go 7 jours</td><td>Yesim</td><td>50.0 Go</td><td>45.29 €</td><td>0.91 €</td></tr><tr><td>eSIM Suisse 50 Go 7 jours</td><td>Yatelo</td><td>50.0 Go</td><td>45.33 €</td><td>0.91 €</td></tr><tr><td>eSIM Pays-Bas 50 Go 7 jours</td><td>Saily</td><td>50.0 Go</td><td>45.34 €</td><td>0.91 €</td></tr><tr><td>eSIM Japon 50 Go 7 jours</td><td>aloSIM</td><td>50.0 Go</td><td>45.47 €</td><td>0.91 €</td></tr><tr><td>eSIM Tchéquie 50 Go 7 jours</td><td>Yatelo</td><td>50.0 Go</td><td>45.49 €</td><td>0.91 €</td></tr><tr><td>eSIM Émirats arabes unis 50 Go 7 jours</td><td>Instabridge</td><td>50.0 Go</td><td>45.56 €</td><td>0.91 €</td></tr><tr><td>eSIM Pologne 50 Go 7 jours</td><td>Ubigi</td><td>50.0 Go</td><td>45.57 €</td><td>0.91 €</td></tr><tr><td>eSIM Croatie 50 Go 7 jours</td><td>Instabridge</td><td>50.0 Go</td><td>45.68 €</td><td>0.91 €</td></tr><tr><td>eSIM Arabie saoudite 50 Go 7 jours</td><td>Flexiroam</td><td>50.0 Go</td><td>45.69 €</td><td>0.91 €</td></tr><tr><td>eSIM Portugal 50 Go 7 jours</td><td>Ubigi</td><td>50.0 Go</td><td>45.73 €</td><td>0.91 €</td></tr></tbody></table>
+  </div>
+
+  <div class="section">
+    <h2>📋 Répartition complète par fournisseur</h2>
+    <table><thead><tr><th>Fournisseur</th><th>Nombre de cartes</th></tr></thead><tbody><tr><td>Airalo</td><td>722</td></tr><tr><td>Ubigi</td><td>562</td></tr><tr><td>eSIMX</td><td>432</td></tr><tr><td>Saily</td><td>382</td></tr><tr><td>GigSky</td><td>342</td></tr><tr><td>Nomad</td><td>312</td></tr><tr><td>Instabridge</td><td>282</td></tr><tr><td>aloSIM</td><td>262</td></tr><tr><td>Holafly</td><td>242</td></tr><tr><td>Yesim</td><td>222</td></tr><tr><td>Jetpac</td><td>212</td></tr><tr><td>Truphone</td><td>202</td></tr><tr><td>JamboSIM</td><td>182</td></tr><tr><td>Flexiroam</td><td>172</td></tr><tr><td>Yatelo</td><td>162</td></tr><tr><td>Maya Mobile</td><td>152</td></tr><tr><td>Roamic</td><td>122</td></tr><tr><td>4S eSIM</td><td>92</td></tr></tbody></table>
+  </div>
+
+  <div class="section">
+    <h2>⏱️ Validité moyenne par fournisseur (Top 5)</h2>
+    <table><thead><tr><th>Fournisseur</th><th>Validité moy.</th></tr></thead><tbody><tr><td>Jetpac</td><td>18.3 jours</td></tr><tr><td>Roamic</td><td>18.3 jours</td></tr><tr><td>Holafly</td><td>18.1 jours</td></tr><tr><td>aloSIM</td><td>17.9 jours</td></tr><tr><td>GigSky</td><td>17.9 jours</td></tr></tbody></table>
+  </div>
+
+  <p class="note">
+    Dashboard analytique développé dans le cadre du test technique MyBestSim · Pipeline ETL Python/Pandas pour l’agrégation de catalogues eSIM multi-fournisseurs, harmonisation des données, calcul d’indicateurs métier et génération automatisée d’un tableau de bord interactif.<br>
+    Sources : 18 fichiers CSV · 5056 produits · 04 June 2026
+</p>
+</main>
+
+<script>
+const COLORS = ['#6366f1','#34d399','#f59e0b','#f43f5e','#60a5fa','#a78bfa','#fb923c','#2dd4bf','#e879f9','#4ade80'];
+const DARK = '#1a1d27';
+const MUTED = '#8b91a8';
+const TEXT = '#f1f5f9';
+const BORDER = '#2e3148';
+
+Chart.defaults.color = MUTED;
+Chart.defaults.borderColor = BORDER;
+Chart.defaults.font.family = "'DM Sans', sans-serif";
+
+// 1 — Produits par fournisseur (bar horizontal)
+new Chart(document.getElementById('chartProviders'), {
+  type: 'bar',
+  data: {
+    labels: ['Airalo', 'Ubigi', 'eSIMX', 'Saily', 'GigSky', 'Nomad', 'Instabridge', 'aloSIM', 'Holafly', 'Yesim', 'Jetpac', 'Truphone', 'JamboSIM', 'Flexiroam', 'Yatelo', 'Maya Mobile', 'Roamic', '4S eSIM'],
+    datasets: [{ data: [722.0, 562.0, 432.0, 382.0, 342.0, 312.0, 282.0, 262.0, 242.0, 222.0, 212.0, 202.0, 182.0, 172.0, 162.0, 152.0, 122.0, 92.0], backgroundColor: COLORS, borderRadius: 6, borderSkipped: false }]
+  },
+  options: {
+    indexAxis: 'y', responsive: true, plugins: { legend: { display: false } },
+    scales: {
+      x: { grid: { color: BORDER }, ticks: { color: MUTED } },
+      y: { grid: { display: false }, ticks: { color: TEXT } }
+    }
+  }
+});
+
+// 2 — Répartition par tranche de prix (doughnut)
+new Chart(document.getElementById('chartBuckets'), {
+  type: 'doughnut',
+  data: {
+    labels: ['< 10 €', '10–25 €', '25–50 €', '50–100 €', '> 100 €'],
+    datasets: [{ data: [887, 1916, 1290, 907, 56], backgroundColor: COLORS, borderColor: DARK, borderWidth: 3 }]
+  },
+  options: {
+    responsive: true, cutout: '60%',
+    plugins: { legend: { position: 'bottom', labels: { padding: 16, boxWidth: 12 } } }
+  }
+});
+
+// 3 — Prix moyen par fournisseur (bar vertical)
+new Chart(document.getElementById('chartAvgPrice'), {
+  type: 'bar',
+  data: {
+    labels: ['4S eSIM', 'Airalo', 'Truphone', 'Roamic', 'Holafly', 'Saily', 'Maya Mobile', 'eSIMX'],
+    datasets: [{
+      label: 'Prix moyen (€)',
+      data: [24.26, 27.05, 27.41, 27.97, 27.98, 28.86, 28.91, 29.33],
+      backgroundColor: COLORS,
+      borderRadius: 8,
+      borderSkipped: false
+    }]
+  },
+  options: {
+    responsive: true,
+    plugins: { legend: { display: false } },
+    scales: {
+      x: { grid: { display: false }, ticks: { color: TEXT } },
+      y: { grid: { color: BORDER }, ticks: { color: MUTED, callback: v => v + ' €' } }
+    }
+  }
+});
+</script>
+</body>
+</html>
