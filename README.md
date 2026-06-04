@@ -6,7 +6,7 @@
 
 
 
-This project is a data analytics dashboard built for a technical test at MyBestSim.  
+This project is a data analytics dashboard built for a technical test at MyBestSim.
 
 It analyzes a catalog of eSIM products from multiple providers using a Python ETL pipeline.
 
@@ -40,15 +40,15 @@ The goal is to extract business insights from raw CSV data and build a clear das
 
 
 
-\- Total products: 5056  
+\- Total products: 5056
 
-\- Price range: 5.36 € → 154.63 €  
+\- Price range: 5.36 € → 154.63 €
 
-\- Average price: 29.30 €  
+\- Average price: 29.30 €
 
-\- Average data: 14.5 GB  
+\- Average data: 14.5 GB
 
-\- Products > 100€: 56  
+\- Products > 100€: 56
 
 \- Unlimited offers: 653 (12.9%)
 
@@ -116,5 +116,7 @@ mybestsim-dashboard/
 
 
 
-Built for a Growth / Data Analyst technical test (MyBestSim)
+Mohamed Skander Ben hamida  
+
+Data / Growth enthusiast
 
