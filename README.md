@@ -20,16 +20,11 @@
 
 
 
-\## 🚀 Live Demo
+## 🚀 Live Demo
 
+👉 **[View Live Dashboard](https://skanderbh02-create.github.io/mybestsim-dashboard/dashboard.html)**
 
-
-👉 \*\*\[Voir le dashboard en ligne](https://skanderbh02-create.github.io/mybestsim-dashboard/dashboard.html)\*\*
-
-
-
-> Généré automatiquement le 04 Juin 2026 — données en temps réel issues du catalogue MyBestSim.
-
+Generated automatically from the MyBestSim catalog data.
 
 
 \---
